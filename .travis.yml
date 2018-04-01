@@ -12,7 +12,7 @@ before_install:
 - sudo apt-get -qq update && sudo apt-get install -y --no-install-recommends python-pygments
   texlive-fonts-recommended texlive-latex-extra texlive-fonts-extra texlive-latex-recommended
   dvipng latex-xcolor texlive-xetex latexmk texlive-generic-recommended texlive-math-extra
-  pgf
+  pgf lmodern
 script:
 - cd src
 - make
