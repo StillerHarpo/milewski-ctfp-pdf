@@ -24,5 +24,4 @@ deploy:
   skip_cleanup: true
   on:
     repo: hmemcpy/milewski-ctfp-pdf
-    all_branches: true
     # tags: true
