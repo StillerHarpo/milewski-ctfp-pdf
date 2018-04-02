@@ -1,5 +1,5 @@
 sudo: required
-dist: xenial
+dist: trusty
 before_install:
 - wget https://github.com/MihailJP/Inconsolata-LGC/releases/download/LGC-1.3.0/InconsolataLGC-1.3.0.tar.xz
 - tar -xvf InconsolataLGC-1.3.0.tar.xz
@@ -17,11 +17,20 @@ script:
 - cd src
 - make
 deploy:
-  provider: releases
-  api_key:
-    secure: XIHB7JJMi1+VcoiIfCPxJ+XsTQZ1xG17VXJ0xrHma2PsQhGtT0vK/rdRE1wAjw1kwEKGe6fP6cVf36QPBA8EuUJYN2pU27AUTB0Wp6aZ1kmaY/cIsyMo340qXQnB28o9clIzufn7ouuiEjgCCAahAvweAsYf/mv6EpZTzl3UAD/WrryyaabfEsiR+6Am0mw+r1zeXXiiappA4rLHjdBgTnF6AXZf/fKzwEm53vIjzcVOTrqIaPCevvf0UUP1D4iD435jov7my7ZZc6zGEwUoDeuKthk3xFmQ5e7gw0FvjUXyqhjOQmc5myX8XSfzG4SlY8jmz9bgFyKTPB1sja8lV738N2HN0tfY9HcCQDXCLCOSJOtEa833p5rIhfHnKy0gQw3K9LvOQnMjiM/0Ik9uWuYIAQW1rtnI8iPClEF8hXshXewGNU+WmxGfQ82OYey8wHPXg4FZj50p7djFr2l0GLG4ngbrFcp9U9msXCVVDDa+0vO09LpGZ6WDWYH4inaK4catJT8vrfSprx1BbiJG+EuzjgvTFKNoxydTiM4EYW3QkVTRkUCa2ZO7ARg5caT0fL12csHGBXlPN3L5RWnTIHg8mWmz3jzBWYKs3IFLMvwKPF3y4Gbq7Ippmj9OwSyR7/V8ozNux5Wb8mFyPdFaW0PsU1SqdNpEy0ry7yFptWI=
-  file: category-theory-for-programmers.pdf
-  skip_cleanup: true
-  on:
-    repo: hmemcpy/milewski-ctfp-pdf
-    # tags: true
+  - provider: s3
+    file: category-theory-for-programmers.pdf
+    skip_cleanup: true
+    access_key_id: AKIAIGCCPJSJSKVQPG5Q
+    secret_access_key:
+      secure: SFVlsOwRLgMdn4lrZJlmANxLGrFAjaDO6+Xa3E84gzrzL2IUYBcyJU/hJq4Ynjj4/Ha3cxkgiw7k1neYIeankyfHsfH5tjmnrIQm7Xf/CECddokwOEvdzHzUm2xWaJZBzc87eSBnHkJMWdn1ZwF2da47ax19txKVFciIUyH94LZriYQPCpdcqBnQ1lBvuFhXrzQYSPKqTLk+68ZxnLnUkCJr9zWqPfmv1FhfS0QpynNCsM81Aazhi6HZab9oRHWfNFvM7KZ4AHOMWWzjaFonMpVXGJfm/Q0NyftJWQiiKyqAP5CeJbfh+NF5WzJULciwFjVUpjjiPiX7gfdiIqpdqvMzANgO2YjIccfbpbboTCAfUbFuk1Qp7pNKje1VF28fe3bEafU5ygYcDie0eWfFd5QJWtjwWpbVDN4fZA420UFX2j+aRxdrzFkAsY2G2dTNQjCFEuGzPoeI0qt2qPR4wx2QUeoSM8wv9OSv4LVHv6m3pAufdCH7MiPqSeBP/FlXQhtbQYezIVqKosXcUvvDsE7YCiysD1pVj4oa7LeCR5I/VJXRX0QvzRL6gkFr4aqIzX93E92GQIzerlP8gCEAOHKeNNdLPLFleKK3KXDnYwoAbNqzp138+2D0mawsKtHgYW3d2QqBXEAfIcft/fdgC28i56yGcfPt4nOdhhBob70=
+    bucket: milewski-ctfp-pdf
+    upload-dir: artifacts
+    acl: public_read
+  - provider: releases
+    file: category-theory-for-programmers.pdf
+    skip_cleanup: true
+    api_key:
+      secure: XIHB7JJMi1+VcoiIfCPxJ+XsTQZ1xG17VXJ0xrHma2PsQhGtT0vK/rdRE1wAjw1kwEKGe6fP6cVf36QPBA8EuUJYN2pU27AUTB0Wp6aZ1kmaY/cIsyMo340qXQnB28o9clIzufn7ouuiEjgCCAahAvweAsYf/mv6EpZTzl3UAD/WrryyaabfEsiR+6Am0mw+r1zeXXiiappA4rLHjdBgTnF6AXZf/fKzwEm53vIjzcVOTrqIaPCevvf0UUP1D4iD435jov7my7ZZc6zGEwUoDeuKthk3xFmQ5e7gw0FvjUXyqhjOQmc5myX8XSfzG4SlY8jmz9bgFyKTPB1sja8lV738N2HN0tfY9HcCQDXCLCOSJOtEa833p5rIhfHnKy0gQw3K9LvOQnMjiM/0Ik9uWuYIAQW1rtnI8iPClEF8hXshXewGNU+WmxGfQ82OYey8wHPXg4FZj50p7djFr2l0GLG4ngbrFcp9U9msXCVVDDa+0vO09LpGZ6WDWYH4inaK4catJT8vrfSprx1BbiJG+EuzjgvTFKNoxydTiM4EYW3QkVTRkUCa2ZO7ARg5caT0fL12csHGBXlPN3L5RWnTIHg8mWmz3jzBWYKs3IFLMvwKPF3y4Gbq7Ippmj9OwSyR7/V8ozNux5Wb8mFyPdFaW0PsU1SqdNpEy0ry7yFptWI=
+    on:
+      repo: hmemcpy/milewski-ctfp-pdf
+      tags: true
